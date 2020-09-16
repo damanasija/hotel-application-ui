@@ -1,0 +1,60 @@
+.flex-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    padding: .5rem;
+    background-color: #edf0f5;
+    display: flex;
+    margin: 1rem;
+    justify-content: flex-start;
+    border-radius: 0.5rem;
+}
+
+.card-item {
+    display: flex;
+    margin: 0rem 0.5rem;
+}
+
+.hotel-logo {
+    border: .1rem solid #cccfd9;
+    border-radius: 0.5rem;
+    align-self: center;
+}
+
+.hotel-details {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.hotel-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.disabled-clicks {
+    pointer-events: none;
+}
+
+h1, h2, h3, h4, h5, p, span, button, select, section, main {
+    font-family: 'Overpass', sans-serif;
+}
+
+.hotel-status-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hotel-favourite-button {
+    pointer-events: none;
+}
+
+.hotel-status-icon {
+    height: 1rem;
+    width: 1rem;
+    margin-left: .5rem;
+}
