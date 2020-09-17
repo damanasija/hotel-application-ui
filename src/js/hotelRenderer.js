@@ -23,11 +23,11 @@ function updateFavouriteStatusForHotel(hotel) {
 }
 
 function findFavouriteStatusContainer(hotelId) {
-    return document.querySelector(`div.card[data-id="${hotelId}"] > div.hotel-details > div.hotel-status-container`);
+    return document.querySelector(`#hotels > li.card[data-id="${hotelId}"] > div.hotel-details > div.hotel-status-container`);
 }
 
 function createCardFor(hotel) {
-    let cardDiv = document.createElement('div');
+    let cardDiv = document.createElement('li');
     cardDiv.classList.add('card');
     cardDiv.dataset.id = hotel.id;
     cardDiv.appendChild(logoElementFor(hotel.logoUrl));
@@ -36,10 +36,13 @@ function createCardFor(hotel) {
 }
 
 function logoElementFor(logoUrl) {
+    let container = document.createElement('div');
+    container.classList.add('image-container');
     let imgElement = document.createElement('img');
     imgElement.classList.add('hotel-logo');
     imgElement.src = logoUrl;
-    return imgElement;
+    // container.appendChild(imgElement);
+    return container;
 }
 
 function hotelDetailsDivFor(hotel) {
@@ -73,8 +76,6 @@ function nameElementFor(name) {
 function favouriteStatusFor(hotel) {
     let container = document.createElement('div');
     container.classList.add('hotel-status-container');
-    let statusLabel = document.createTextNode(decideLabelFor(hotel.isFavourite));
-    container.appendChild(statusLabel);
     container.appendChild(favouriteIconFor(hotel.isFavourite));
     return container;
 }
@@ -83,10 +84,6 @@ function favouriteIconFor(status) {
     let icon = stringToHtml(decideIconFor(status));
     icon.classList.add('hotel-status-icon');
     return icon;
-}
-
-function decideLabelFor(status) {
-    return status ? 'Unfavourite' : 'Favourite';
 }
 
 function decideIconFor(status) {
