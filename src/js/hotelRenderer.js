@@ -38,9 +38,12 @@ function createCardFor(hotel) {
 function logoElementFor(logoUrl) {
     let container = document.createElement('div');
     container.classList.add('image-container');
+    let innerContainer = document.createElement('div');
     let imgElement = document.createElement('img');
     imgElement.classList.add('hotel-logo');
     imgElement.src = logoUrl;
+    innerContainer.appendChild(imgElement);
+    container.appendChild(innerContainer);
     // container.appendChild(imgElement);
     return container;
 }
