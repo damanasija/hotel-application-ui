@@ -4,10 +4,11 @@
     box-sizing: border-box;
     font-family: 'Overpass', sans-serif;
 }
-.flex-container {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: flex-start;
+.hotels-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 1fr;
+    grid-gap: 1rem;
 }
 
 ul.flex-container {
@@ -16,27 +17,45 @@ ul.flex-container {
 
 .card {
     background-color: #edf0f5;
-    /* display: flex; */
-    /* justify-content: space-between; */
+    display: flex;
     border-radius: 0.5rem;
     padding: .5rem;
-    flex: 1 1 20rem;
-    margin: .5rem;
+    transition: 0.3s;
+    gap: 1rem;
+}
+
+.card:hover {
+    cursor: pointer;
+    /* border: 1px solid rgb(193, 199, 208); */
+    background-color: #DEE1E5;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: 0.2s;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-blue {
+    color: white;
+    background-color: #1a73e8;
+}
+
+.btn-blue:hover {
+    background-color: #0352CC;
 }
 
 .image-container {
     background-color: #fff;
-    display: flex;
-    align-items: center;
     border: .1rem solid #cccfd9;
     border-radius: 0.5rem;
-    /* flex: 0 0 calc(40% - 0.5em); */
-    width: 40%;
-}
-
-.image-container > div {
-    /* display: flex; */
-    padding: .5rem;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    overflow: hidden;
 }
 
 .hotel-logo {
@@ -48,8 +67,7 @@ ul.flex-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* flex: 0 1 calc(60% - 0.5em); */
-    width: 60%;
+    flex: 2;
 }
 
 .hotel-card-header {
@@ -70,4 +88,127 @@ ul.flex-container {
     height: 1rem;
     width: 1rem;
     margin-left: .5rem;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* overflow: auto; */
+    /* background-color: rgb(0,0,0); */
+    background-color:rgba(9, 30, 66, 0.54);
+}
+
+.modal-view-container {
+    background-color: #fefefe;
+    border: 0.1rem solid #888;
+    border-radius: 0.5rem;
+    /* width: 80vw; */
+    /* display: flex;
+    flex-direction: column; */
+    align-items: center;
+}
+
+.hotel-modal-close {
+    color: #aaaaaa;
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* margin-left: auto; */
+}
+
+.hotel-modal-close:hover,
+.hotel-modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hotel-modal-header {
+    display: flex;
+    width: 100%;
+    font-size: 1.2rem;
+    justify-content: space-between;
+    background-color: #DEE1E5;
+    padding: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.hotel-modal-content {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* width: 70%; */
+    padding: 1rem;
+    margin: 1rem 0px;
+}
+
+.hotel-name-container {
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+    font-size: 2rem;
+}
+
+.input-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.form-input {
+    border: 0px;
+    /* font-size: 1.7rem; */
+    padding: 0.2rem;
+    border: 0.1rem solid rgb(223, 225, 230);
+    border-radius: 0.2rem;
+}
+
+#hotel-name:hover{
+    border-color: rgb(193, 199, 208);
+    /* background-color: rgb(235,236,240); */
+}
+
+#hotel-name:focus{
+    background-color: transparent;
+}
+
+.hotel-options {
+    font-size: 1.2em;
+    padding: 1rem;
+    align-self: center;
+}
+
+.options-container {
+    padding: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.selected-hotel-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    display: flex;
+}
+
+.hotel-tag {
+    color: rgb(7, 71, 166);
+    background-color: rgb(222, 235, 255);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.modal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

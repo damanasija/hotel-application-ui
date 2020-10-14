@@ -1,6 +1,17 @@
 import { HotelController } from './hotelController.js';
 import { interceptClicks } from './interceptor.js';
 
+const hotelOptions = [{
+    id: "near",
+    name: "Near To Me"
+}, {
+    id: "dine-in",
+    name: "Dine In"
+}, {
+    id: "Take Away",
+    name: "Take Away"
+}];
+
 const hotelController = new HotelController();
 
 

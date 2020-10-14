@@ -22,6 +22,12 @@ function updateFavouriteStatusForHotel(hotel) {
         .replaceWith(updatedView);
 }
 
+function updateHotelPreferencesOnView(hotel, availableOptions) {
+    let hotelNameElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > div > h1.hotel-name`);
+    hotelNameElement.textContent = hotel.name;
+    console.log(hotel.name)
+}
+
 function findFavouriteStatusContainer(hotelId) {
     return document.querySelector(`#hotels > li.card[data-id="${hotelId}"] > div.hotel-details > div.hotel-status-container`);
 }
@@ -38,12 +44,10 @@ function createCardFor(hotel) {
 function logoElementFor(logoUrl) {
     let container = document.createElement('div');
     container.classList.add('image-container');
-    let innerContainer = document.createElement('div');
     let imgElement = document.createElement('img');
     imgElement.classList.add('hotel-logo');
     imgElement.src = logoUrl;
-    innerContainer.appendChild(imgElement);
-    container.appendChild(innerContainer);
+    container.appendChild(imgElement);
     // container.appendChild(imgElement);
     return container;
 }
