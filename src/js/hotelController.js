@@ -1,4 +1,4 @@
-import { renderNewHotel, updateFavouriteStatusForHotel as updateStatusOnView, openModalFor, closeHotelModal } from './hotelRenderer.js';
+import { renderNewHotel, updateFavouriteStatusForHotel as updateStatusOnView, openModalFor, closeHotelModal, updateHotelPreferencesOnView } from './hotelRenderer.js';
 import { Hotel } from './hotel.js';
 import { HOTELS } from './seeds.js';
 
@@ -29,13 +29,17 @@ HotelController.prototype.updateFavouriteStatusFor = function(hotelId) {
     updateStatusOnView(hotelToUpdate);
 }
 
-HotelController.prototype.updateHotelPreferences = function(hotelPreferences) {
-    let hotelModel = this.findHotelById(hotelPreferences.hotelId);
-    if(!hotelModel) {
-        return;
-    }
-    hotelModel.options = hotelPreferences.options.map(hotelPreference => hotelPreference.id);
-    
+HotelController.prototype.updateHotelPreferences = function(hotelOptions) {
+    let updatedHotelName = document.forms.hotelUpdateForm['hotelNameInput'];
+    let selectedHotelPreferences = Array.from(document.forms.hotelUpdateForm['options'])
+        .filter(preference => preference.checked)
+        .map(preference => preference.dataset.optionId);
+    let hotelId = parseInt(document.forms.hotelUpdateForm.dataset.selectedHotel);
+    let hotelModel = this.findHotelById(hotelId);
+    hotelModel.name = updatedHotelName.value;
+    hotelModel.options = selectedHotelPreferences;
+    updateHotelPreferencesOnView(hotelModel, hotelOptions);
+    closeHotelModal();
 }
 
 HotelController.prototype.findHotelById = function(hotelId) {

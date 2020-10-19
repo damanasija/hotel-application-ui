@@ -17,8 +17,11 @@ const hotelController = new HotelController();
 
 document.querySelector('#hotels')
     .addEventListener('click', event => interceptClicks(event, hotelController));
-document.querySelector('#hotel-modal')
+document.querySelector('.modal-close')
     .addEventListener('click', event => hotelController.closeModal());
-
+document.querySelector('#updateHotelButton')
+    .addEventListener('click', event => {
+        hotelController.updateHotelPreferences(hotelOptions);
+    });
 
 window.addEventListener('DOMContentLoaded', event => hotelController.refreshHotels());

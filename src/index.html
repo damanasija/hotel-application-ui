@@ -18,24 +18,24 @@
                 
             </header>
             <div class="modal-body">
-                <form id="hotelUpdateForm">
+                <form name="hotelUpdateForm" id="hotelUpdateForm">
                     <div class="form-element">
                         <label for="hotel-name-input" class="form-label">Name: </label>
-                        <input type="text" class="form-input" name="hotelNameInput">
+                        <input type="text" class="form-input" name="hotelNameInput" >
                     </div>
                     <div class="form-element">
                         <div class="form-label">Choose that apply:</div>
                         <div class="options-container">
                             <div class="checkbox-option">
-                                <input type="checkbox" value="near" id="near">
+                                <input type="checkbox" name="options" data-option-id="near">
                                 <label for="near">Near To Me</label>
                             </div>
                             <div class="checkbox-option">
-                                <input type="checkbox" value="dine-in" id="dine">
+                                <input type="checkbox" name="options" data-option-id="dine-in">
                                 <label for="dine">Dine In</label>
                             </div>
                             <div class="checkbox-option">
-                                <input type="checkbox" value="take-away" id="take-away">
+                                <input type="checkbox"  name="options" data-option-id="take-away">
                                 <label for="take-away">Take Away</label>
                             </div>
                         </div>
