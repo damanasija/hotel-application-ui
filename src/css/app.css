@@ -6,7 +6,7 @@
 }
 .hotels-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-auto-rows: 1fr;
     grid-gap: 1rem;
 }
@@ -39,9 +39,10 @@ ul.flex-container {
     font-weight: 500;
 }
 
-.btn-blue {
+#updateHotelButton {
     color: white;
     background-color: #1a73e8;
+    width: 100%;
 }
 
 .btn-blue:hover {
@@ -55,6 +56,8 @@ ul.flex-container {
     display: flex;
     flex: 1;
     align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
     overflow: hidden;
 }
 
@@ -90,114 +93,13 @@ ul.flex-container {
     margin-left: .5rem;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    /* display: flex; */
-    align-items: center;
-    justify-content: center;
-    /* overflow: auto; */
-    /* background-color: rgb(0,0,0); */
-    background-color:rgba(9, 30, 66, 0.54);
-}
-
-.modal-view-container {
-    background-color: #fefefe;
-    border: 0.1rem solid #888;
-    border-radius: 0.5rem;
-    /* width: 80vw; */
-    /* display: flex;
-    flex-direction: column; */
-    align-items: center;
-}
-
-.hotel-modal-close {
-    color: #aaaaaa;
-    font-size: 1.5rem;
-    font-weight: bold;
-    /* margin-left: auto; */
-}
-
-.hotel-modal-close:hover,
-.hotel-modal-close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.hotel-modal-header {
-    display: flex;
-    width: 100%;
-    font-size: 1.2rem;
-    justify-content: space-between;
-    background-color: #DEE1E5;
-    padding: 1rem;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-}
-
-.hotel-modal-content {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    /* width: 70%; */
-    padding: 1rem;
-    margin: 1rem 0px;
-}
-
-.hotel-name-container {
-    margin-bottom: 1.5rem;
-    margin-top: 0.5rem;
-    font-size: 2rem;
-}
-
-.input-label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.form-input {
-    border: 0px;
-    /* font-size: 1.7rem; */
-    padding: 0.2rem;
-    border: 0.1rem solid rgb(223, 225, 230);
-    border-radius: 0.2rem;
-}
-
-#hotel-name:hover{
-    border-color: rgb(193, 199, 208);
-    /* background-color: rgb(235,236,240); */
-}
-
-#hotel-name:focus{
-    background-color: transparent;
-}
-
 .hotel-options {
-    font-size: 1.2em;
     padding: 1rem;
     align-self: center;
 }
 
 .options-container {
     padding: 1rem;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: center;
-}
-
-.selected-hotel-name {
-    font-size: 1.8rem;
-    font-weight: 800;
-    display: flex;
 }
 
 .hotel-tag {
@@ -207,8 +109,89 @@ ul.flex-container {
     text-transform: uppercase;
 }
 
-.modal-title {
-    display: flex;
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     align-items: center;
     justify-content: center;
+    background-color:rgba(9, 30, 66, 0.54);
+}
+
+.modal-content {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .5rem;
+    flex-direction: column;
+    width: min(95vw, 600px);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* background-color: #DEE1E5; */
+    padding: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title {
+    line-height: 1.5;
+    font-size: 1.25rem;
+}
+
+.modal-close {
+    color: #aaaaaa;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.form-element {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.4rem 0.6rem;
+    color: #495057;
+    border: 1px solid rgb(223, 225, 230);
+    border-radius: 0.2rem;
+}
+.form-input:hover{
+    border-color: rgb(193, 199, 208);
+}
+
+.form-input:focus{
+    background-color: transparent;
 }

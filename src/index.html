@@ -11,35 +11,39 @@
 <body>
     <ul class="hotels-container" id="hotels"></ul>
     <section id="hotel-modal" class="modal">
-        <div class="modal-view-container">
-            <div class="hotel-modal-header">
-                <div class="modal-title">Updating&nbsp;&nbsp;<span id="selected-hotel-name">Hotel 1</span></div>
-                <div id="close-hotel-modal" class="hotel-modal-close">&times;</div>
-            </div>
-            <!-- <hr> -->
-            <div class="hotel-modal-content">
-                <div class="hotel-name-container">
-                    <label for="hotel-name-input" class="input-label">Name: </label>
-                    <input type="text" class="form-input" name="hotel-name-input" id="hotel-name-input">
-                </div>
-                <div class="hotel-options">
-                    <h4>Choose that apply</h4>
-                    <div class="options-container">
-                        <div class="checkbox-option">
-                            <input type="checkbox" value="near" id="near">
-                            <label for="near">Near To Me</label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" value="dine-in" id="dine">
-                            <label for="dine">Dine In</label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" value="take-away" id="take-away">
-                            <label for="take-away">Take Away</label>
+        <div class="modal-content">
+            <header class="modal-header">
+                <div class="modal-title">Update Hotel 1</div>
+                <span class="modal-close">&times;</span>
+                
+            </header>
+            <div class="modal-body">
+                <form id="hotelUpdateForm">
+                    <div class="form-element">
+                        <label for="hotel-name-input" class="form-label">Name: </label>
+                        <input type="text" class="form-input" name="hotel-name-input" id="hotel-name-input">
+                    </div>
+                    <div class="form-element">
+                        <div class="form-label">Choose that apply:</div>
+                        <div class="options-container">
+                            <div class="checkbox-option">
+                                <input type="checkbox" value="near" id="near">
+                                <label for="near">Near To Me</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" value="dine-in" id="dine">
+                                <label for="dine">Dine In</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" value="take-away" id="take-away">
+                                <label for="take-away">Take Away</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button id="updateHotelButton" class="btn btn-blue">Update hotel</button>
+                </form>
+            </div>
+            <div class="footer modal-footer">
+                <button id="updateHotelButton" class="btn btn-blue">Update</button>
             </div>
         </div>
     </section>

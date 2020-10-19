@@ -46,22 +46,22 @@ function isHotelCardClicked(event) {
     return event.target.closest(`li.card`);
 }
 
-document.querySelector('#updateHotelButton')
-    .addEventListener('click', event => {
-        let updatedHotelName = document.querySelector('#hotel-name-input');
-        let selectedHotelPreferences = Array.from(document.querySelectorAll(`.options-container > .checkbox-option > input[type="checkbox"]`))
-        .filter(preference => preference.checked)
-        .map(preference => {
-            return {
-                "id": preference.id,
-                "label": document.querySelector(`label[for="${preference.id}"]`).textContent
-            };
-        });
-        console.log('name:'  + updatedHotelName.value);
-        console.log(selectedHotelPreferences);
-        hotelController.updateHotelPreferences({
-            "name": updatedHotelName,
-            "preferences": selectedHotelPreferences
-        });
-    });
+// document.querySelector('#updateHotelButton')
+//     .addEventListener('click', event => {
+//         let updatedHotelName = document.querySelector('#hotel-name-input');
+//         let selectedHotelPreferences = Array.from(document.querySelectorAll(`.options-container > .checkbox-option > input[type="checkbox"]`))
+//         .filter(preference => preference.checked)
+//         .map(preference => {
+//             return {
+//                 "id": preference.id,
+//                 "label": document.querySelector(`label[for="${preference.id}"]`).textContent
+//             };
+//         });
+//         console.log('name:'  + updatedHotelName.value);
+//         console.log(selectedHotelPreferences);
+//         hotelController.updateHotelPreferences({
+//             "name": updatedHotelName,
+//             "preferences": selectedHotelPreferences
+//         });
+//     });
 export { interceptClicks };

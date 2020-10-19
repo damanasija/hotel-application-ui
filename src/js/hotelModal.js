@@ -12,14 +12,14 @@ function closeModal() {
     delete modalElement.dataset.selectedHotel;
 }
 
-document.querySelector('#close-hotel-modal')
-    .addEventListener('click', event => closeModal());
+// document.querySelector('#close-hotel-modal')
+//     .addEventListener('click', event => closeModal());
 
-window
-.addEventListener('click', event => {
-    if (event.target == document.querySelector('#hotel-modal')) {
-        closeModal();
-    }
-});
+// window
+// .addEventListener('click', event => {
+//     if (event.target == document.querySelector('#hotel-modal')) {
+//         closeModal();
+//     }
+// });
 
 export { openModalFor, closeModal };
