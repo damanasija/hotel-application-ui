@@ -1,5 +1,3 @@
-import { openModalFor, closeModal } from './hotelModal.js';
-
 const OPTIONS = [{
     "id": "near",
     "label": "Near To Me"
@@ -18,8 +16,7 @@ function interceptClicks(event, hotelController) {
     if(isHotelCardClicked(event)) {
         console.log('card clicked');
         let hotelId = findClickedHotelCardId(event);
-        let hotel = hotelController.findHotelById(hotelId);
-        openModalFor(hotel);
+        hotelController.openHotelModal(hotelId);
     }
 }
 

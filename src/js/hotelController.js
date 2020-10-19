@@ -1,4 +1,4 @@
-import { renderNewHotel, updateFavouriteStatusForHotel as updateStatusOnView } from './hotelRenderer.js';
+import { renderNewHotel, updateFavouriteStatusForHotel as updateStatusOnView, openModalFor, closeHotelModal } from './hotelRenderer.js';
 import { Hotel } from './hotel.js';
 import { HOTELS } from './seeds.js';
 
@@ -40,4 +40,16 @@ HotelController.prototype.updateHotelPreferences = function(hotelPreferences) {
 
 HotelController.prototype.findHotelById = function(hotelId) {
     return this.hotels.find(hotel => hotel.id === hotelId);
+}
+
+HotelController.prototype.openHotelModal = function(hotelId) {
+    let hotel = this.findHotelById(hotelId);
+    if(!hotel) {
+        return;
+    }
+    openModalFor(hotel);
+}
+
+HotelController.prototype.closeModal = function() {
+    closeHotelModal();
 }
