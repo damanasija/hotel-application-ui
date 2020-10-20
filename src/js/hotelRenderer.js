@@ -11,7 +11,7 @@ const UNFAVOURITE = `<svg class="disabled-clicks" viewBox="0 0 16 16" class="bi 
 const hotelsContainer = document.querySelector('#hotels');
 
 function updateHotelPreferencesOnView(hotel, hotelOptions) {
-    let hotelNameElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > div > h1.hotel-name`);
+    let hotelNameElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > .hotel-name`);
     hotelNameElement.textContent = hotel.name;
 }
 
@@ -82,16 +82,12 @@ function hotelDetailsDivFor(hotel) {
     hotelDetails.appendChild(favouriteStatusFor(hotel));
     return hotelDetails;
 }
+
 function createHeaderFor(hotel) {
-    let header = document.createElement('div');
-    header.classList.add('hotel-card-header');
-    header.appendChild(nameAndContactDetailsFor(hotel));
-    return header;
-}
-function nameAndContactDetailsFor(hotel) {
     let container = document.createElement('div');
     container.appendChild(nameElementFor(hotel.name));
     container.appendChild(phoneElementFor(hotel.phoneNumber));
+    container.classList.add('hotel-card-header');
     return container;
 }
 
