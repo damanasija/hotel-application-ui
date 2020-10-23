@@ -24,7 +24,8 @@ function toggleFavouriteStatus(event, hotelController) {
 // }
 
 function findClickedHotelCardId(event) {
-    let clickedHotel = event.path.find(el => el.matches('li.card'));
+    let path = event.path || (event.composedPath && event.composedPath());
+    let clickedHotel = path.find(el => el.matches('li.card'));
     return parseInt(clickedHotel.dataset.id);
 }
 
