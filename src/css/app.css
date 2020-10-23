@@ -2,7 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: 'Overpass', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 .hotels-container {
     display: grid;
@@ -40,13 +40,13 @@ ul.flex-container {
 }
 
 #updateHotelButton {
-    color: white;
-    background-color: #1a73e8;
     width: 100%;
+    line-height: 1.5;
 }
 
-.btn-blue:hover {
-    background-color: #0352CC;
+.btn-blue {
+    background-color: #1a73e8;
+    color: white;
 }
 
 .image-container {
@@ -232,4 +232,20 @@ ul.flex-container {
     max-width: 960px;
     margin: 0px auto;
     padding: .5rem;
+}
+
+.form-error {
+    font-size: .8rem;
+    color: #da002f;
+    padding-left: .5rem;
+}
+
+.disabled-btn {
+    background-color: #cccfd9;
+    color: #505664;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none;
 }
