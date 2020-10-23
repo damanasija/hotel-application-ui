@@ -1,1 +1,0 @@
-# hotel-application-ui
