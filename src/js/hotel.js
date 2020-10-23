@@ -5,6 +5,6 @@ export class Hotel {
         this.isFavourite = isFavourite;
         this.phoneNumber = phoneNumber;
         this.logoUrl = logoUrl;
-        this.options = [];
+        this.optionIds = [];
     }
 }

@@ -10,9 +10,11 @@ const UNFAVOURITE = `<svg class="disabled-clicks" viewBox="0 0 16 16" class="bi 
 
 const hotelsContainer = document.querySelector('#hotels');
 
-function updateHotelPreferencesOnView(hotel, hotelOptions) {
+function updateHotelPreferencesOnView(hotel) {
     let hotelNameElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > .hotel-name`);
     hotelNameElement.textContent = hotel.name;
+    let hotelOptionsElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > ul`);
+    hotelOptionsElement.replaceWith(optionContainerFor(hotel.optionIds));
 }
 
 function closeHotelModal() {
@@ -25,15 +27,19 @@ function closeHotelModal() {
 }
 
 function openModalFor(hotel) {
-    Array.from(document.forms.hotelUpdateForm['options'])
-        .filter(option => hotel.options.includes(option.dataset.optionId))
-        .forEach(option => option.checked = true);
+    checkSelectedOptions(hotel.optionIds);
     let hotelModalForm = document.querySelector('form#hotelUpdateForm');
     hotelModalForm.dataset.selectedHotel = hotel.id;
     document.forms.hotelUpdateForm['hotelNameInput'].value = hotel.name;
     document.querySelector('#hotelModalTitle').innerText = `Update ${hotel.name}`;
     let modalElement = document.querySelector('#hotel-modal');
     modalElement.style.display = 'flex';
+}
+
+function checkSelectedOptions(selectedOptionIds) {
+    Array.from(document.forms.hotelUpdateForm['options'])
+    .filter(optionElement => selectedOptionIds.includes(optionElement.id))
+    .forEach(optionElement => optionElement.checked = true);
 }
 
 function renderNewHotel(hotel) {
@@ -54,12 +60,12 @@ function findFavouriteStatusContainer(hotelId) {
     return document.querySelector(`#hotels > li.card[data-id="${hotelId}"] > div.hotel-details > div.hotel-status-container`);
 }
 
-function createCardFor(hotel) {
+function createCardFor(hotel, options) {
     let cardDiv = document.createElement('li');
     cardDiv.classList.add('card');
     cardDiv.dataset.id = hotel.id;
     cardDiv.appendChild(logoElementFor(hotel.logoUrl));
-    cardDiv.appendChild(hotelDetailsDivFor(hotel));
+    cardDiv.appendChild(hotelDetailsDivFor(hotel, options));
     return cardDiv;
 }
 
@@ -76,7 +82,6 @@ function logoElementFor(logoUrl) {
 
 function hotelDetailsDivFor(hotel) {
     let hotelDetails = document.createElement('div');
-    hotelDetails.classList.add('card-item');
     hotelDetails.classList.add('hotel-details');
     hotelDetails.appendChild(createHeaderFor(hotel));
     hotelDetails.appendChild(favouriteStatusFor(hotel));
@@ -87,8 +92,24 @@ function createHeaderFor(hotel) {
     let container = document.createElement('div');
     container.appendChild(nameElementFor(hotel.name));
     container.appendChild(phoneElementFor(hotel.phoneNumber));
+    container.appendChild(optionContainerFor(hotel.optionIds))
     container.classList.add('hotel-card-header');
     return container;
+}
+
+function optionContainerFor(options) {
+    let optionsListElement = document.createElement('ul');
+    optionsListElement.classList.add('selected-options-list');
+    options
+        .map(option => {
+            let element = document.createElement('li');
+            let optionLabel = document.querySelector(`label[for="${option}"]`).textContent;
+            element.classList.add('gray-badge');
+            element.appendChild(document.createTextNode(optionLabel));
+            return element;
+        })
+        .forEach(optionElement => optionsListElement.appendChild(optionElement));
+    return optionsListElement;
 }
 
 function nameElementFor(name) {

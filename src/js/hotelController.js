@@ -29,17 +29,20 @@ HotelController.prototype.updateFavouriteStatusFor = function(hotelId) {
     updateStatusOnView(hotelToUpdate);
 }
 
-HotelController.prototype.updateHotelPreferences = function(hotelOptions) {
+HotelController.prototype.updateHotelPreferences = function() {
     let updatedHotelName = document.forms.hotelUpdateForm['hotelNameInput'];
-    let selectedHotelPreferences = Array.from(document.forms.hotelUpdateForm['options'])
-        .filter(preference => preference.checked)
-        .map(preference => preference.dataset.optionId);
     let hotelId = parseInt(document.forms.hotelUpdateForm.dataset.selectedHotel);
     let hotelModel = this.findHotelById(hotelId);
+    hotelModel.optionIds = fetchSelectedOptions();
     hotelModel.name = updatedHotelName.value;
-    hotelModel.options = selectedHotelPreferences;
-    updateHotelPreferencesOnView(hotelModel, hotelOptions);
+    updateHotelPreferencesOnView(hotelModel);
     closeHotelModal();
+}
+
+function fetchSelectedOptions() {
+    return Array.from(document.forms.hotelUpdateForm['options'])
+    .filter(optionElement => optionElement.checked)
+    .map(optionElement => optionElement.id);
 }
 
 HotelController.prototype.findHotelById = function(hotelId) {
