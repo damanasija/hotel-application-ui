@@ -27,6 +27,7 @@ function closeHotelModal() {
     document.querySelector(`form#hotelUpdateForm input[name='hotelNameInput']`).value = "";
     Array.from(document.forms.hotelUpdateForm['options'])
         .forEach(option => option.checked = false);
+    hideInvalidNameError();
     delete modalElement.dataset.selectedHotel;
 }
 

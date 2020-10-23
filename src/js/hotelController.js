@@ -72,12 +72,13 @@ HotelController.prototype.closeModal = function () {
 }
 
 HotelController.prototype.validateHotelName = function () {
-    let updatedHotelName = document.forms.hotelUpdateForm['hotelNameInput'].value.trim();
-    console.log(updatedHotelName);
-    if (updatedHotelName.length < 3) {
+    let updatedHotelNameElement = document.forms.hotelUpdateForm['hotelNameInput']
+    let spaceTrimmedHotelName = updatedHotelNameElement.value.trim();
+    updatedHotelNameElement.value = spaceTrimmedHotelName;
+    if (spaceTrimmedHotelName.length < 3) {
         showInvalidNameError('Name should be atleast three characters long');
     }
-    if (updatedHotelName.length > 100) {
+    if (spaceTrimmedHotelName.length > 100) {
         showInvalidNameError('Name should not be greater than 100 characters');
     }
 }
