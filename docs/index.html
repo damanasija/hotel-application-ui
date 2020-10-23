@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app.ed7d1cf1.css">
+<script src="/app.ed7d1cf1.js"></script></head>
+
+<body>
+    <section class="hotels-container-wrapper">
+        <ul class="hotels-container" id="hotels"></ul>
+    </section>
+    <section id="hotel-modal" class="modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div class="modal-title" id="hotelModalTitle"></div>
+                <span class="modal-close">&times;</span>
+                
+            </header>
+            <div class="modal-body">
+                <form name="hotelUpdateForm" id="hotelUpdateForm">
+                    <div class="form-element">
+                        <label for="hotel-name-input" class="form-label">Name: </label>
+                        <input type="text" class="form-input" name="hotelNameInput">
+                        <div class="form-error hidden" id="hotelNameError"></div>
+                    </div>
+                    <div class="form-element">
+                        <div class="form-label">Choose that apply:</div>
+                        <div class="options-container">
+                            <div class="checkbox-option">
+                                <input type="checkbox" name="options" id="near">
+                                <label for="near">Near To Me</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" name="options" id="dine">
+                                <label for="dine">Dine In</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" name="options" id="take-away">
+                                <label for="take-away">Take Away</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="footer modal-footer">
+                <button id="updateHotelButton" class="btn btn-blue">Update</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script src="/main.fb6bbcaf.js"></script>
+
+</html>
