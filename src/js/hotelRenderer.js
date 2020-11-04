@@ -43,8 +43,8 @@ function openModalFor(hotel) {
 
 function checkSelectedOptions(selectedOptionIds) {
     Array.from(document.forms.hotelUpdateForm['options'])
-    .filter(optionElement => selectedOptionIds.includes(optionElement.id))
-    .forEach(optionElement => optionElement.checked = true);
+        .filter(optionElement => selectedOptionIds.includes(optionElement.id))
+        .forEach(optionElement => optionElement.checked = true);
 }
 
 function renderNewHotel(hotel) {
@@ -66,50 +66,40 @@ function findFavouriteStatusContainer(hotelId) {
 }
 
 function createCardFor(hotel, options) {
-    let cardDiv = document.createElement('li');
-    cardDiv.classList.add('card');
-    cardDiv.dataset.id = hotel.id;
+    let cardDiv = createElement('li', { class: "card", "data-id": hotel.id });
     cardDiv.appendChild(logoElementFor(hotel.logoUrl));
     cardDiv.appendChild(hotelDetailsDivFor(hotel, options));
     return cardDiv;
 }
 
 function logoElementFor(logoUrl) {
-    let container = document.createElement('div');
-    container.classList.add('image-container');
-    let imgElement = document.createElement('img');
-    imgElement.classList.add('hotel-logo');
-    imgElement.src = logoUrl;
+    let container = createElement('div', { class: "image-container" });
+    let imgElement = createElement('img', { class: "hotel-logo", src: logoUrl });
     container.appendChild(imgElement);
-    // container.appendChild(imgElement);
     return container;
 }
 
 function hotelDetailsDivFor(hotel) {
-    let hotelDetails = document.createElement('div');
-    hotelDetails.classList.add('hotel-details');
+    let hotelDetails = createElement('div', { class: 'hotel-details' });
     hotelDetails.appendChild(createHeaderFor(hotel));
     hotelDetails.appendChild(favouriteStatusFor(hotel));
     return hotelDetails;
 }
 
 function createHeaderFor(hotel) {
-    let container = document.createElement('div');
+    let container = createElement('div', { class: "hotel-card-header" });
     container.appendChild(nameElementFor(hotel.name));
     container.appendChild(phoneElementFor(hotel.phoneNumber));
-    container.appendChild(optionContainerFor(hotel.optionIds))
-    container.classList.add('hotel-card-header');
+    container.appendChild(optionContainerFor(hotel.optionIds));
     return container;
 }
 
 function optionContainerFor(options) {
-    let optionsListElement = document.createElement('ul');
-    optionsListElement.classList.add('selected-options-list');
+    let optionsListElement = createElement('ul', { class: 'selected-options-list' });
     options
         .map(option => {
-            let element = document.createElement('li');
+            let element = createElement('li', { class: 'gray-badge' });
             let optionLabel = document.querySelector(`label[for="${option}"]`).textContent;
-            element.classList.add('gray-badge');
             element.appendChild(document.createTextNode(optionLabel));
             return element;
         })
@@ -118,23 +108,19 @@ function optionContainerFor(options) {
 }
 
 function nameElementFor(name) {
-    let nameHeading = document.createElement('h1');
-    nameHeading.classList.add('hotel-name');
+    let nameHeading = createElement('h1', { class: 'hotel-name' });
     nameHeading.appendChild(document.createTextNode(name));
     return nameHeading;
 }
 
 function favouriteStatusFor(hotel) {
-    let container = document.createElement('div');
-    container.classList.add('hotel-status-container');
+    let container = createElement('div', { class: 'hotel-status-container' });
     container.appendChild(favouriteIconFor(hotel.isFavourite));
     return container;
 }
 
 function favouriteIconFor(status) {
-    let icon = stringToHtml(decideIconFor(status));
-    icon.classList.add('hotel-status-icon');
-    return icon;
+    return stringToHtml(decideIconFor(status), { class: 'hotel-status-icon' });
 }
 
 function decideIconFor(status) {
@@ -142,15 +128,9 @@ function decideIconFor(status) {
 }
 
 function phoneElementFor(phoneNumber) {
-    let phoneElement = document.createElement('span');
+    let phoneElement = createElement('span');
     phoneElement.appendChild(document.createTextNode(`Ph: ${phoneNumber}`));
     return phoneElement;
-}
-
-function stringToHtml(htmlString) {
-    let parser = new DOMParser();
-    let parsed = parser.parseFromString(htmlString, 'text/html');
-    return parsed.body.firstChild;
 }
 
 function enableHotelModalUpdateButton() {
@@ -169,12 +149,39 @@ function disableHotelModalUpdateButton() {
 
 function showInvalidNameError(errorMessage) {
     let errorMessageElement = document.querySelector('#hotelNameError');
+    addAllAttributesTo(errorMessageElement, { class: ''});
     errorMessageElement.textContent = errorMessage;
-    errorMessageElement.classList.remove('hidden');
 }
 
 function hideInvalidNameError() {
     let errorMessageElement = document.querySelector('#hotelNameError');
-    errorMessageElement.classList.add('hidden');
-    errorMessageElement.value = '';
+    addAllAttributesTo(errorMessageElement, { class: 'hidden', value: '' });
+}
+
+function stringToHtml(htmlString, attributes) {
+    let parser = new DOMParser();
+    let parsed = parser.parseFromString(htmlString, 'text/html');
+    let constructedElement = parsed.body.firstChild;
+    if (attributes) {
+        addAllAttributesTo(constructedElement, attributes);
+    }
+    return constructedElement;
+}
+
+function createElement(tagName, attributes) {
+    let element = document.createElement(tagName);
+    if (attributes) {
+        addAllAttributesTo(element, attributes);
+    }
+    return element;
+}
+function addAllAttributesTo(element, attributes) {
+    Object.entries(attributes)
+    .forEach(([key, value]) => {
+        if (key.startsWith('data-') || key === 'class') {
+            element.setAttribute(key, value);
+        } else {
+            element[key] = value;
+        }
+    });
 }
