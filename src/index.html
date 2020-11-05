@@ -13,12 +13,11 @@
     <section class="hotels-container-wrapper">
         <ul class="hotels-container" id="hotels"></ul>
     </section>
-    <section id="hotel-modal" class="modal">
+    <section id="hotel-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="hotelModalTitle" 	aria-modal="true">
         <div class="modal-content">
             <header class="modal-header">
                 <div class="modal-title" id="hotelModalTitle"></div>
-                <span class="modal-close">&times;</span>
-                
+                <button class="modal-close">&times;</span>
             </header>
             <div class="modal-body">
                 <form name="hotelUpdateForm" id="hotelUpdateForm">

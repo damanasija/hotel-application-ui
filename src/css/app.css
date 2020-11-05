@@ -183,6 +183,8 @@ ul.flex-container {
     color: #aaaaaa;
     font-size: 1.25rem;
     font-weight: 700;
+    background-color: transparent;
+    border: 0px;
 }
 
 .modal-close:hover,

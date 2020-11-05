@@ -23,6 +23,7 @@ HotelController.prototype.fetchHotels = async function () {
     // let hotels = await response.json();
     let hotels = HOTELS;
     this.hotels = hotels.map((hotel, index) => new Hotel(index, hotel.name, hotel.isFavourite, hotel.phoneNumber, hotel.logo));
+    this.currentlySelectedHotelCard = null;
 }
 
 HotelController.prototype.refreshHotels = async function () {
@@ -30,13 +31,11 @@ HotelController.prototype.refreshHotels = async function () {
     this.hotels.forEach(hotel => renderNewHotel(hotel));
 }
 
-HotelController.prototype.updateFavouriteStatusFor = function (hotelId) {
+HotelController.prototype.updateFavouriteStatusFor = function (hotelCardElement) {
+    let hotelId = this.hotelIdFromElement(hotelCardElement);
     let hotelToUpdate = this.findHotelById(hotelId);
-    if (!hotelToUpdate) {
-        return;
-    }
     hotelToUpdate.isFavourite = !hotelToUpdate.isFavourite;
-    updateStatusOnView(hotelToUpdate);
+    updateStatusOnView(hotelCardElement, hotelToUpdate.isFavourite);
 }
 
 HotelController.prototype.updateHotelPreferences = function () {
@@ -45,7 +44,7 @@ HotelController.prototype.updateHotelPreferences = function () {
     let hotelModel = this.findHotelById(hotelId);
     hotelModel.optionIds = fetchSelectedOptions();
     hotelModel.name = updatedHotelName.value;
-    updateHotelPreferencesOnView(hotelModel);
+    updateHotelPreferencesOnView(this.currentlySelectedHotelCard, hotelModel);
     closeHotelModal();
 }
 
@@ -55,15 +54,18 @@ function fetchSelectedOptions() {
         .map(optionElement => optionElement.id);
 }
 
+HotelController.prototype.hotelIdFromElement = function (hotelCardElement) {
+    return parseInt(hotelCardElement.dataset.id);
+}
+
 HotelController.prototype.findHotelById = function (hotelId) {
     return this.hotels.find(hotel => hotel.id === hotelId);
 }
 
-HotelController.prototype.openHotelModal = function (hotelId) {
-    let hotel = this.findHotelById(hotelId);
-    if (!hotel) {
-        return;
-    }
+HotelController.prototype.openHotelModal = function (hotelCardElement) {
+    this.currentlySelectedHotelCard = hotelCardElement;
+    const hotelId = this.hotelIdFromElement(hotelCardElement);
+    const hotel = this.findHotelById(hotelId);
     openModalFor(hotel);
 }
 

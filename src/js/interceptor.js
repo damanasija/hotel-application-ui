@@ -1,36 +1,55 @@
+import { closeHotelModal } from "./hotelRenderer";
+
+const SPACE_KEY_CODE = 32;
+const ENTER_KEY_CODE = 13;
+const ESC_KEY_CODE = 27;
+
+function interceptKeyUpEvents(event, hotelController) {
+    // preventing scroll
+    if (event.keyCode === SPACE_KEY_CODE || event.keyCode === ENTER_KEY_CODE) {
+        event.preventDefault();
+        openModal(event, hotelController);
+    }
+}
+
+function preventSpaceKeyDownEvent(event) {
+    // preventing scroll as multiple keydown events are fired fi space is held for long
+    if(event.keyCode === SPACE_KEY_CODE) {
+        event.preventDefault();
+    }
+}
+
+function handleEscapePressed(event) {
+    if(event.keyCode === ESC_KEY_CODE) {
+        closeHotelModal();
+    }
+}
+
+function openModal(event, hotelController) {
+    const clickedCard = findClickedCardElementFrom(event);
+    if(clickedCard) {
+        hotelController.openHotelModal(event.target);
+    }
+}
+
 function interceptClicks(event, hotelController) {
     if (isFavouriteButtonClicked(event)) {
-        toggleFavouriteStatus(event, hotelController);
+        let cardElement = findClickedCardElementFrom(event);
+        hotelController.updateFavouriteStatusFor(cardElement);
+        return;
     }
-    if (isHotelCardClicked(event)) {
-        console.log('card clicked');
-        let hotelId = findClickedHotelCardId(event);
-        hotelController.openHotelModal(hotelId);
+    let clickedCardElement = findClickedCardElementFrom(event);
+    if (clickedCardElement) {
+        hotelController.openHotelModal(clickedCardElement);
     }
 }
 
 function isFavouriteButtonClicked(event) {
-    return event.target.closest('div.hotel-status-container');
+    return event.target.closest('.hotel-status-container');
 }
 
-function toggleFavouriteStatus(event, hotelController) {
-    let hotelId = findClickedHotelCardId(event);
-    console.log(`intercepted click for favourite status. hotel-id: ${hotelId}`)
-    hotelController.updateFavouriteStatusFor(hotelId);
-}
-
-// function findClickedHotelIdFromFavouriteButton(event) {
-//     return event.target.parentElement.parentElement.dataset.id;
-// }
-
-function findClickedHotelCardId(event) {
-    let path = event.path || (event.composedPath && event.composedPath());
-    let clickedHotel = path.find(el => el.matches('li.card'));
-    return parseInt(clickedHotel.dataset.id);
-}
-
-function isHotelCardClicked(event) {
+function findClickedCardElementFrom(event) {
     return event.target.closest(`li.card`);
 }
 
-export { interceptClicks };
+export { interceptClicks, interceptKeyUpEvents, preventSpaceKeyDownEvent, handleEscapePressed };

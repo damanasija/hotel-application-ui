@@ -14,10 +14,10 @@ const UNFAVOURITE = `<svg class="disabled-clicks" viewBox="0 0 16 16" class="bi 
 
 const hotelsContainer = document.querySelector('#hotels');
 
-function updateHotelPreferencesOnView(hotel) {
-    let hotelNameElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > .hotel-name`);
+function updateHotelPreferencesOnView(hotelCardElement, hotel) {
+    let hotelNameElement = hotelCardElement.lastChild.firstChild.firstChild;
     hotelNameElement.textContent = hotel.name;
-    let hotelOptionsElement = document.querySelector(`#hotels > li.card[data-id="${hotel.id}"] > div.hotel-details > div.hotel-card-header > ul`);
+    let hotelOptionsElement = hotelCardElement.lastChild.firstChild.lastChild;
     hotelOptionsElement.replaceWith(optionContainerFor(hotel.optionIds));
 }
 
@@ -35,10 +35,12 @@ function openModalFor(hotel) {
     checkSelectedOptions(hotel.optionIds);
     let hotelModalForm = document.querySelector('form#hotelUpdateForm');
     hotelModalForm.dataset.selectedHotel = hotel.id;
-    document.forms.hotelUpdateForm['hotelNameInput'].value = hotel.name;
+    const hotelNameInput = document.forms.hotelUpdateForm['hotelNameInput'];
+    hotelNameInput.value = hotel.name;
     document.querySelector('#hotelModalTitle').innerText = `Update ${hotel.name}`;
     let modalElement = document.querySelector('#hotel-modal');
     modalElement.style.display = 'flex';
+    hotelNameInput.focus();
 }
 
 function checkSelectedOptions(selectedOptionIds) {
@@ -51,22 +53,15 @@ function renderNewHotel(hotel) {
     hotelsContainer.appendChild(createCardFor(hotel));
 }
 
-function updateFavouriteStatusForHotel(hotel) {
-    let favouriteStatusContainer = findFavouriteStatusContainer(hotel.id);
-    if (!favouriteStatusContainer) {
-        return;
-    }
-    let updatedView = favouriteStatusFor(hotel);
+function updateFavouriteStatusForHotel(hotelElement, updatedStatus) {
+    let favouriteStatusContainer = hotelElement.children[1].children[1];
+    let updatedView = favouriteStatusFor(updatedStatus);
     favouriteStatusContainer
         .replaceWith(updatedView);
 }
 
-function findFavouriteStatusContainer(hotelId) {
-    return document.querySelector(`#hotels > li.card[data-id="${hotelId}"] > div.hotel-details > div.hotel-status-container`);
-}
-
 function createCardFor(hotel, options) {
-    let cardDiv = createElement('li', { class: "card", "data-id": hotel.id });
+    let cardDiv = createElement('li', { class: "card", "data-id": hotel.id, role: "button", tabindex: "0"});
     cardDiv.appendChild(logoElementFor(hotel.logoUrl));
     cardDiv.appendChild(hotelDetailsDivFor(hotel, options));
     return cardDiv;
@@ -82,7 +77,7 @@ function logoElementFor(logoUrl) {
 function hotelDetailsDivFor(hotel) {
     let hotelDetails = createElement('div', { class: 'hotel-details' });
     hotelDetails.appendChild(createHeaderFor(hotel));
-    hotelDetails.appendChild(favouriteStatusFor(hotel));
+    hotelDetails.appendChild(favouriteStatusFor(hotel.isFavourite));
     return hotelDetails;
 }
 
@@ -113,9 +108,9 @@ function nameElementFor(name) {
     return nameHeading;
 }
 
-function favouriteStatusFor(hotel) {
+function favouriteStatusFor(favouriteStatus) {
     let container = createElement('div', { class: 'hotel-status-container' });
-    container.appendChild(favouriteIconFor(hotel.isFavourite));
+    container.appendChild(favouriteIconFor(favouriteStatus));
     return container;
 }
 
@@ -178,10 +173,6 @@ function createElement(tagName, attributes) {
 function addAllAttributesTo(element, attributes) {
     Object.entries(attributes)
     .forEach(([key, value]) => {
-        if (key.startsWith('data-') || key === 'class') {
-            element.setAttribute(key, value);
-        } else {
-            element[key] = value;
-        }
+        element.setAttribute(key, value);
     });
 }

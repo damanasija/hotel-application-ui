@@ -1,11 +1,13 @@
 import { HotelController } from './hotelController.js';
-import { interceptClicks } from './interceptor.js';
+import { interceptClicks, interceptKeyUpEvents, preventSpaceKeyDownEvent, handleEscapePressed } from './interceptor.js';
 
 const hotelController = new HotelController();
 
+const hotelContainer = document.querySelector('#hotels');
+hotelContainer.addEventListener('click', event => interceptClicks(event, hotelController));
+hotelContainer.addEventListener('keyup', event => interceptKeyUpEvents(event, hotelController));
+hotelContainer.addEventListener('keydown', event => preventSpaceKeyDownEvent(event));
 
-document.querySelector('#hotels')
-    .addEventListener('click', event => interceptClicks(event, hotelController));
 document.querySelector('.modal-close')
     .addEventListener('click', event => hotelController.closeModal());
 document.querySelector('#updateHotelButton')
@@ -19,6 +21,9 @@ window.addEventListener('click', event => {
         hotelController.closeModal();
       }
 });
+window.addEventListener('keyup', event => {
+    handleEscapePressed(event);
+})
 
 function isBackdropClickedForHotelModal(event) {
     return event.target.id === 'hotel-modal';
