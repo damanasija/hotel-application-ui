@@ -14,31 +14,29 @@ const UNFAVOURITE = `<svg class="disabled-clicks" viewBox="0 0 16 16" class="bi 
 
 const hotelsContainer = document.querySelector('#hotels');
 
-function updateHotelPreferencesOnView(hotelCardElement, hotel) {
-    let hotelNameElement = hotelCardElement.lastChild.firstChild.firstChild;
-    hotelNameElement.textContent = hotel.name;
-    let hotelOptionsElement = hotelCardElement.lastChild.firstChild.lastChild;
-    hotelOptionsElement.replaceWith(optionContainerFor(hotel.optionIds));
+function updateHotelPreferencesOnView(hotelCardElement, updatedHotelName, checkedHotelOptions) {
+    let hotelNameElement = hotelCardElement.lastElementChild.firstElementChild.firstElementChild;
+    hotelNameElement.textContent = updatedHotelName;
+    let hotelOptionsElement = hotelCardElement.lastElementChild.firstElementChild.lastElementChild;
+    hotelOptionsElement.replaceWith(optionContainerFor(checkedHotelOptions));
 }
 
 function closeHotelModal() {
     let modalElement = document.querySelector('#hotel-modal');
     modalElement.style.display = 'none';
-    document.querySelector(`form#hotelUpdateForm input[name='hotelNameInput']`).value = "";
+    document.forms.hotelUpdateForm['hotelNameInput'].value = "";
     Array.from(document.forms.hotelUpdateForm['options'])
         .forEach(option => option.checked = false);
     hideInvalidNameError();
-    delete modalElement.dataset.selectedHotel;
 }
 
 function openModalFor(hotel) {
     checkSelectedOptions(hotel.optionIds);
-    let hotelModalForm = document.querySelector('form#hotelUpdateForm');
-    hotelModalForm.dataset.selectedHotel = hotel.id;
-    const hotelNameInput = document.forms.hotelUpdateForm['hotelNameInput'];
+    const modalElement = document.querySelector('#hotel-modal');
+    const hotelModalForm = document.forms.hotelUpdateForm;
+    const hotelNameInput = hotelModalForm['hotelNameInput'];
     hotelNameInput.value = hotel.name;
-    document.querySelector('#hotelModalTitle').innerText = `Update ${hotel.name}`;
-    let modalElement = document.querySelector('#hotel-modal');
+    modalElement.firstElementChild.firstElementChild.firstElementChild.innerText = `Update ${hotel.name}`;
     modalElement.style.display = 'flex';
     hotelNameInput.focus();
 }
@@ -85,17 +83,20 @@ function createHeaderFor(hotel) {
     let container = createElement('div', { class: "hotel-card-header" });
     container.appendChild(nameElementFor(hotel.name));
     container.appendChild(phoneElementFor(hotel.phoneNumber));
-    container.appendChild(optionContainerFor(hotel.optionIds));
+    container.appendChild(createEmptyOptionsContainer());
     return container;
 }
 
+function createEmptyOptionsContainer() {
+    return createElement('ul', { class: 'selected-options-list' });
+}
+
 function optionContainerFor(options) {
-    let optionsListElement = createElement('ul', { class: 'selected-options-list' });
+    let optionsListElement = createEmptyOptionsContainer();
     options
         .map(option => {
             let element = createElement('li', { class: 'gray-badge' });
-            let optionLabel = document.querySelector(`label[for="${option}"]`).textContent;
-            element.appendChild(document.createTextNode(optionLabel));
+            element.appendChild(document.createTextNode(option.label));
             return element;
         })
         .forEach(optionElement => optionsListElement.appendChild(optionElement));
@@ -156,7 +157,7 @@ function hideInvalidNameError() {
 function stringToHtml(htmlString, attributes) {
     let parser = new DOMParser();
     let parsed = parser.parseFromString(htmlString, 'text/html');
-    let constructedElement = parsed.body.firstChild;
+    let constructedElement = parsed.body.firstElementChild;
     if (attributes) {
         addAllAttributesTo(constructedElement, attributes);
     }

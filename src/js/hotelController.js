@@ -39,19 +39,25 @@ HotelController.prototype.updateFavouriteStatusFor = function (hotelCardElement)
 }
 
 HotelController.prototype.updateHotelPreferences = function () {
-    let updatedHotelName = document.forms.hotelUpdateForm['hotelNameInput'];
-    let hotelId = parseInt(document.forms.hotelUpdateForm.dataset.selectedHotel);
-    let hotelModel = this.findHotelById(hotelId);
-    hotelModel.optionIds = fetchSelectedOptions();
+    const hotelId = this.hotelIdFromElement(this.currentlySelectedHotelCard);
+    const hotelModel = this.findHotelById(hotelId);
+    const selectedOptions = fetchSelectedOptions();
+    hotelModel.optionIds = selectedOptions.map(option => option.id);
+    const updatedHotelName = document.forms.hotelUpdateForm['hotelNameInput'];
     hotelModel.name = updatedHotelName.value;
-    updateHotelPreferencesOnView(this.currentlySelectedHotelCard, hotelModel);
-    closeHotelModal();
+    updateHotelPreferencesOnView(this.currentlySelectedHotelCard, updatedHotelName.value, selectedOptions);
+    this.closeModal();
 }
 
 function fetchSelectedOptions() {
     return Array.from(document.forms.hotelUpdateForm['options'])
         .filter(optionElement => optionElement.checked)
-        .map(optionElement => optionElement.id);
+        .map(optionElement => {
+            return {
+                id: optionElement.id,
+                label: optionElement.nextElementSibling.textContent
+            }
+        });
 }
 
 HotelController.prototype.hotelIdFromElement = function (hotelCardElement) {
@@ -71,6 +77,8 @@ HotelController.prototype.openHotelModal = function (hotelCardElement) {
 
 HotelController.prototype.closeModal = function () {
     closeHotelModal();
+    this.currentlySelectedHotelCard.focus();
+    this.currentlySelectedHotelCard = null;
 }
 
 HotelController.prototype.validateHotelName = function () {
